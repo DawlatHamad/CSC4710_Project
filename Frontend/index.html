@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>DASH</title>
+</head>
+<body>
+    <main>
+        <label>Username:</label>
+        <input type="text" id="username-input"> <br><br>
+        <label>Password:</label>
+        <input type="password" id="password-input"> <br><br>
+        <label>First Name:</label>
+        <input type="text" id="firstname-input"> <br><br>
+        <label>Last Name:</label>
+        <input type="text" id="lastname-input"> <br><br>
+        <label>Salary:</label>
+        <input type="number" id="salary-input"> <br><br>
+        <label>Age:</label>
+        <input type="number" id="age-input"> <br><br>
+        <button id="add-user-btn">Add User</button>
+        <br><br>
+
+        <div>
+            <input placeholder="search by Userid" id="userid-search-input">
+            <button id="search-btn-1">Search</button> &thinsp;
+            <input placeholder="search by Username" id="username-search-input">
+            <button id="search-btn-2">Search</button> &thinsp; <br><br>
+            <input placeholder="search by Name" id="name-search-input">
+            <button id="search-btn-3">Search</button> &thinsp;
+            <input placeholder="search by Userid" id="id-search-input">
+            <button id="search-btn-4">Search</button> &thinsp; <br><br>
+            <input placeholder="search by Salary" id="salary-search-input">
+            <button id="search-btn-5">Search</button> &thinsp;
+            <input placeholder="search by Age" id="age-search-input">
+            <button id="search-btn-6">Search</button> &thinsp; <br><br>
+            <input placeholder="search by After" id="after-search-input">
+            <button id="search-btn-7">Search</button> &thinsp;
+            <input placeholder="same by Same" id="same-search-input">
+            <button id="search-btn-8">Search</button> &thinsp; <br><br>
+            <input placeholder="search by Today" id="today-search-input">
+            <button id="search-btn-9">Search</button> &thinsp; 
+            <input placeholder="search by Never" id="never-search-input">
+            <button id="search-btn-10">Search</button> &thinsp; <br><br>
+        </div>
+
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Salary</th>
+                    <th>Age</th>
+                    <th>Register Day</th>
+                    <th>Sign-in Time</th> 
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
