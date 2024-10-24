@@ -91,13 +91,16 @@ searchBtn7.onclick = function() {
 }
 
 const searchBtn8 = document.querySelector('#search-btn-8');
-/* for the never fucntion 
 searchBtn8.onclick = function() {
-    fetch('http://localhost:5050/neverSignedIn')
+    const never = new Date().toISOString().split('T')[0]; //fix over here
+
+    const url = `http://localhost:5050/never?never=${encodeURIComponent(never)}`;
+
+    fetch(url)
         .then(response => response.json())
         .then(data => loadHTMLTable(data['data']));
-};
-*/
+}
+
 
 function deleteRowById(userid) {
     fetch('http://localhost:5050/delete/' + userid, {
