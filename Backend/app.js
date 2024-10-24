@@ -131,17 +131,17 @@ app.get('/today', (request, response) => {
         .catch(err => console.log(err));
 });
 
-/* for users never logged in
-app.get('/neverSignedIn', (request, response) => {
-    const query = "SELECT * FROM users WHERE signintime IS NULL"; // or use 'signintime = ""' if signintime is empty
+// search - never
+app.get('/never', (request, response) => {
+    const { never } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByNever(never);
     
-    db.query(query, (err, results) => {
-        if (err) {
-            return response.status(500).send(err);
-        }
-        return response.json({ data: results });
-    });
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
 });
-*/
+
 
 app.listen(process.env.PORT, () => console.log('app is running'));
