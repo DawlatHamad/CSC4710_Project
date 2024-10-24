@@ -10,17 +10,8 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
     }
 });
 
-const searchBtn1 = document.querySelector('#search-btn-1');
-const searchBtn2 = document.querySelector('#search-btn-2');
-const searchBtn3 = document.querySelector('#search-btn-3');
-const searchBtn4 = document.querySelector('#search-btn-4');
-const searchBtn5 = document.querySelector('#search-btn-5');
-const searchBtn6 = document.querySelector('#search-btn-6');
-const searchBtn7 = document.querySelector('#search-btn-7');
-const searchBtn8 = document.querySelector('#search-btn-8');
-const searchBtn9 = document.querySelector('#search-btn-9');
-const searchBtn10 = document.querySelector('#search-btn-10');
 
+const searchBtn1 = document.querySelector('#search-btn-1');
 searchBtn1.onclick = function() {
     const searchId= document.querySelector('#userid-search-input').value;
 
@@ -29,21 +20,77 @@ searchBtn1.onclick = function() {
     .then(data => loadHTMLTable(data['data']));
 }
 
-searchBtn3.onclick = function() {
-    const searchName = document.querySelector('#name-search-input').value.trim();
+const searchBtn2 = document.querySelector('#search-btn-2');
+searchBtn2.onclick = function() {
+    const firstname = document.querySelector('#firstname-search-input').value.trim();
+    const lastname = document.querySelector('#lastname-search-input').value.trim();
 
-    // Split the input into first and last names (if applicable)
-    const nameParts = searchName.split(' ');
-    const firstname = nameParts[0] || '';
-    const lastname = nameParts[1] || '';
-
-    // Create the URL with query parameters for first and last name
-    const url = `http://localhost:5050/search?firstname=${firstname}&lastname=${lastname}`;
+    const url = `http://localhost:5050/search?firstname=${encodeURIComponent(firstname)}&lastname=${encodeURIComponent(lastname)}`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => loadHTMLTable(data['data']));
 }
+
+const searchBtn3 = document.querySelector('#search-btn-3');
+searchBtn3.onclick = function() {
+    const minSalary = document.querySelector('#minSalary-search-input').value;
+    const maxSalary = document.querySelector('#maxSalary-search-input').value;
+
+    const url = `http://localhost:5050/salary?minSalary=${encodeURIComponent(minSalary)}&maxSalary=${encodeURIComponent(maxSalary)}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+}
+
+
+const searchBtn4 = document.querySelector('#search-btn-4');
+searchBtn4.onclick = function() {
+    const minAge = document.querySelector('#minAge-search-input').value;
+    const maxAge = document.querySelector('#maxAge-search-input').value;
+
+    const url = `http://localhost:5050/age?minAge=${encodeURIComponent(minAge)}&maxAge=${encodeURIComponent(maxAge)}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+}
+
+const searchBtn5 = document.querySelector('#search-btn-5');
+searchBtn5.onclick = function() {
+    const after = document.querySelector('#after-search-input').value;
+
+    const url = `http://localhost:5050/after?after=${encodeURIComponent(after)}}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+}
+
+const searchBtn6 = document.querySelector('#search-btn-6'); 
+searchBtn6.onclick = function() {
+    const same = document.querySelector('#same-search-input').value;
+
+    const url = `http://localhost:5050/same?same=${encodeURIComponent(same)}}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+}
+
+const searchBtn7 = document.querySelector('#search-btn-7');
+searchBtn7.onclick = function() {
+    const today = new Date().toISOString().split('T')[0];
+
+    const url = `http://localhost:5050/today?today=${encodeURIComponent(today)}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+}
+
+const searchBtn8 = document.querySelector('#search-btn-8');
 
 
 function deleteRowById(userid) {
