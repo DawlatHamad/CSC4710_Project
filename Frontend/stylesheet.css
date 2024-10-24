@@ -87,29 +87,34 @@ body {
 /* Home Page */
 .nav {
     background: #fff;
-    display: flex;        
-    justify-content: space-between; 
-    align-items: center;    
-    padding: 10px;         
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Ensure all items in nav are centered vertically */
+    padding: 10px;
 }
 
 .logo {
     font-size: 25px;
     font-weight: 900;
-    
-}
-
-.logo a {
-    text-decoration: none;
-    color: #000;
 }
 
 .logo h1 {
     color: #FF6F8A;
 }
 
-.right-links a {
-    padding: 0 10px;
+.name-logOut {
+    display: flex;
+    align-items: center; /* Vertically center username and button */
+    gap: 15px; /* Add space between name and logOut button */
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.logOut a {
+    text-decoration: none; /* This removes the underline */
 }
 
 .home_btn {
@@ -121,18 +126,33 @@ body {
     font-size: 15px;
     cursor: pointer;
     transition: all .3s;
-    margin-top: 10px;
     padding: 0px 10px;
-    float: right; /* Add this line */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; /* Center the button content */
 }
 
 .home_btn:hover {
     opacity: 0.82;
 }
 
+
 .bottom {
     width: 100%;
     margin-top: 20px;
+}
+
+.logOut {
+    display: flex;
+    align-items: flex-start; /* Align items to the start */
+    justify-content: center; /* Center horizontally */
+}
+
+.name {
+    display: flex;
+    align-items: flex-start; /* Align items to the start */
+    justify-content: center; /* Center horizontally */
+    gap: 15px; /* Space between the name and button */
 }
 
 @media only screen and (max-width:840px){
@@ -150,7 +170,7 @@ body {
 }
 
 main {
-    width: 50%;
+    width: 100%;
     margin: 50px auto;
     text-align: center;
 }
