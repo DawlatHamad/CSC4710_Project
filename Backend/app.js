@@ -58,9 +58,9 @@ app.get('/search/:userid', (request, response) => {
     .catch(err => console.log(err));
 })
 
-// search - User Name ( First + Last)
+// search - Name ( First + Last)
 app.get('/search', (request, response) => {
-    const { firstname = '', lastname = '' } = request.query;
+    const { firstname, lastname } = request.query; 
     const db = dbService.getDbServiceInstance();
 
     const result = db.searchByName(firstname, lastname);
@@ -69,4 +69,67 @@ app.get('/search', (request, response) => {
         .then(data => response.json({ data: data }))
         .catch(err => console.log(err));
 });
+
+// search - Salary
+app.get('/salary', (request, response) => {
+    const { minSalary, maxSalary } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchBySalary(minSalary, maxSalary);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+
+// search - Age
+app.get('/age', (request, response) => {
+    const { minAge, maxAge } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByAge(minAge, maxAge);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+// search - after
+app.get('/after', (request, response) => {
+    const { after } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByAfter(after);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+// search - same
+app.get('/same', (request, response) => {
+    const { same } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchBySame(same);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+// search - today
+app.get('/today', (request, response) => {
+    const { today } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByToday(today);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+
 app.listen(process.env.PORT, () => console.log('app is running'));
