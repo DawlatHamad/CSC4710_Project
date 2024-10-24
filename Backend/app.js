@@ -1,200 +1,135 @@
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:5050/getAll')
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const dbService = require('./dbService');
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended : false}));
+
+// create
+app.post('/insert', (request, response) => {
+    const { username, password, firstname, lastname, salary, age } = request.body;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.insertNewUsers(username, password, firstname, lastname, salary, age);
+
+    result
+    .then(data => response.json({data: data}))
+    .catch(err => console.log(err));
 });
 
-document.querySelector('table tbody').addEventListener('click', function(event) {
-    if (event.target.className === "delete-row-btn") {
-        deleteRowById(event.target.dataset.id);
-    }
+// read
+app.get('/getAll', (request, response) => {
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllData();
+
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
+// delete
+app.delete('/delete/:userid', (request, response) => {
+    const { userid } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.deleteRowById(userid);
+
+    result
+    .then(data => response.json({success : data})) 
+    .catch(err => console.log(err));
+
+});
+
+// search - User Id
+app.get('/search/:userid', (request, response) => {
+    const { userid } = request.params;
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchById(userid);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
+// search - Name ( First + Last)
+app.get('/search', (request, response) => {
+    const { firstname, lastname } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchByName(firstname, lastname);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
+
+// search - Salary
+app.get('/salary', (request, response) => {
+    const { minSalary, maxSalary } = request.query; 
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.searchBySalary(minSalary, maxSalary);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
 });
 
 
-const searchBtn1 = document.querySelector('#search-btn-1');
-searchBtn1.onclick = function() {
-    const searchId= document.querySelector('#userid-search-input').value;
+// search - Age
+app.get('/age', (request, response) => {
+    const { minAge, maxAge } = request.query; 
+    const db = dbService.getDbServiceInstance();
 
-    fetch('http://localhost:5050/search/' + searchId)
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
-}
+    const result = db.searchByAge(minAge, maxAge);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
 
-const searchBtn2 = document.querySelector('#search-btn-2');
-searchBtn2.onclick = function() {
-    const firstname = document.querySelector('#firstname-search-input').value.trim();
-    const lastname = document.querySelector('#lastname-search-input').value.trim();
+// search - after
+app.get('/after', (request, response) => {
+    const { after } = request.query; 
+    const db = dbService.getDbServiceInstance();
 
-    const url = `http://localhost:5050/search?firstname=${encodeURIComponent(firstname)}&lastname=${encodeURIComponent(lastname)}`;
+    const result = db.searchByAfter(after);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
+// search - same
+app.get('/same', (request, response) => {
+    const { same } = request.query; 
+    const db = dbService.getDbServiceInstance();
 
-const searchBtn3 = document.querySelector('#search-btn-3');
-searchBtn3.onclick = function() {
-    const minSalary = document.querySelector('#minSalary-search-input').value;
-    const maxSalary = document.querySelector('#maxSalary-search-input').value;
+    const result = db.searchBySame(same);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
 
-    const url = `http://localhost:5050/salary?minSalary=${encodeURIComponent(minSalary)}&maxSalary=${encodeURIComponent(maxSalary)}`;
+// search - today
+app.get('/today', (request, response) => {
+    const { today } = request.query; 
+    const db = dbService.getDbServiceInstance();
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
-
-
-const searchBtn4 = document.querySelector('#search-btn-4');
-searchBtn4.onclick = function() {
-    const minAge = document.querySelector('#minAge-search-input').value;
-    const maxAge = document.querySelector('#maxAge-search-input').value;
-
-    const url = `http://localhost:5050/age?minAge=${encodeURIComponent(minAge)}&maxAge=${encodeURIComponent(maxAge)}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
-
-const searchBtn5 = document.querySelector('#search-btn-5');
-searchBtn5.onclick = function() {
-    const after = document.querySelector('#after-search-input').value;
-
-    const url = `http://localhost:5050/after?after=${encodeURIComponent(after)}}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
-
-const searchBtn6 = document.querySelector('#search-btn-6'); 
-searchBtn6.onclick = function() {
-    const same = document.querySelector('#same-search-input').value;
-
-    const url = `http://localhost:5050/same?same=${encodeURIComponent(same)}}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
-
-const searchBtn7 = document.querySelector('#search-btn-7');
-searchBtn7.onclick = function() {
-    const today = new Date().toISOString().split('T')[0];
-
-    const url = `http://localhost:5050/today?today=${encodeURIComponent(today)}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => loadHTMLTable(data['data']));
-}
-
-const searchBtn8 = document.querySelector('#search-btn-8');
+    const result = db.searchByToday(today);
+    
+    result
+        .then(data => response.json({ data: data }))
+        .catch(err => console.log(err));
+});
 
 
-function deleteRowById(userid) {
-    fetch('http://localhost:5050/delete/' + userid, {
-        method: 'DELETE'
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    });
-}
-
-const userBtn = document.querySelector('#add-user-btn');
-
-userBtn.onclick = function () {
-    const usernameInput = document.querySelector('#username-input');
-    const username = usernameInput.value;
-    usernameInput.value = "";
-
-    const passwordInput = document.querySelector('#password-input');
-    const password = passwordInput.value;
-    passwordInput.value = "";
-
-    const firstnameInput = document.querySelector('#firstname-input');
-    const firstname = firstnameInput.value;
-    firstnameInput.value = "";
-
-    const lastnameInput = document.querySelector('#lastname-input');
-    const lastname = lastnameInput.value;
-    lastnameInput.value = "";
-
-    const salaryInput = document.querySelector('#salary-input');
-    const salary = salaryInput.value;
-    salaryInput.value = "";
-
-    const ageInput = document.querySelector('#age-input');
-    const age = ageInput.value;
-    ageInput.value = "";
-
-    fetch('http://localhost:5050/insert', {
-        headers: {
-            'Content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({username : username, password : password, firstname : firstname, lastname : lastname, salary : salary, age : age})
-    })
-    .then(response => response.json())
-    .then(data => insertRowIntoTable(data['data']));
-};
-
-function insertRowIntoTable(data) {
-    const table = documment.querySelector('table tbody');
-    const isTableData = table.querySelector('.no-data');
-
-    let tableHtml = "<tr>";
-
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (key === 'signin_time') {
-                data[key] = new Date(data[key]).toLocaleDateString();
-            }
-            tableHtml += `<td>${data[key]}</td>`; 
-        }
-    }
-
-    tableHtml += `<td><button class="delete-row-btn" data-id=${data.userid}>Delete</button></td>`;
-
-    tableHtml += "<tr>";
-
-    if (isTableData) {
-        table.innerHTML = tableHtml;
-    }
-    else {
-        const newRow = table.insertRow();
-        newRow.innerHTML = tableHtml;
-    }
-}
-
-function loadHTMLTable(data) {
-    const table = document.querySelector('table tbody');
-
-    if(data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='10'>No Data</td></tr>";
-        return;
-    }
-
-    let tableHtml = "";
-
-    data.forEach(function ({userid, username, password, firstname, lastname, salary, age, registerday, signintime}){
-        tableHtml += "<tr>";
-        tableHtml += `<td>${userid}</td>`;
-        tableHtml += `<td>${username}</td>`;
-        tableHtml += `<td>${password}</td>`;
-        tableHtml += `<td>${firstname}</td>`;
-        tableHtml += `<td>${lastname}</td>`;
-        tableHtml += `<td>${salary}</td>`;
-        tableHtml += `<td>${age}</td>`;
-        tableHtml += `<td>${new Date(registerday).toLocaleDateString()}</td>`;
-        tableHtml += `<td>${new Date(signintime).toLocaleString()}</td>`; 
-        tableHtml += `<td><button class="delete-row-btn" data-id=${userid}>Delete</button></td>`;
-        tableHtml += "</tr>";
-    });
-
-    table.innerHTML = tableHtml;
-}
+app.listen(process.env.PORT, () => console.log('app is running'));
