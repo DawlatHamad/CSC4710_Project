@@ -215,6 +215,22 @@ class DbService {
         }
     }
     
+    async searchByNever() {  // Remove the 'never' parameter since it's not being used
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM Users WHERE signintime < NOW() - INTERVAL 10 DAY LIMIT 25;"; 
+        
+                connection.query(query, (err, results) => {  // Remove [never] as it's unused
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                });
+            });
+            return response;
+        } 
+        catch (error) {
+            console.log(error);
+        }
+    }    
 
 }
 
