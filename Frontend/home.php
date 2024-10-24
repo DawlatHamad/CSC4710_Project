@@ -1,3 +1,8 @@
+<?php
+session_start();
+include("connect.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,34 +17,27 @@
         <div class="logo">
             <h1>DASH</h1>
         </div>
-        <div class="signOff">
-            <a href="index.html"> <button class="home_btn" type="button">Log Out</button></a>
+        <div class="name-logOut">
+            <div class="name">
+                <?php 
+                if (isset($_SESSION['username'])) {
+                    $username = $_SESSION['username'];
+                    $query = mysqli_query($conn, "SELECT Users.* FROM `Users` WHERE Users.username='$username'");
+                    while ($row = mysqli_fetch_array($query)) {
+                        echo '<span class="user-name">' . $row['firstname'] . ' ' . $row['lastname'] . '</span>';
+                    }
+                }
+                ?>
+            </div>
+            <div class="logOut">
+                <a href="index.php">
+                    <button class="home_btn" type="button">Log Out</button>
+                </a>
+            </div>
         </div>
     </div>
+    
     <main>
-        <!-- <form id="user-form">
-            <label for="username-input">Username:</label>
-            <input type="text" id="username-input" required> <br><br>
-
-            <label for="password-input">Password:</label>
-            <input type="password" id="password-input" required> <br><br>
-
-            <label for="firstname-input">First Name:</label>
-            <input type="text" id="firstname-input" required> <br><br>
-
-            <label for="lastname-input">Last Name:</label>
-            <input type="text" id="lastname-input" required> <br><br>
-
-            <label for="salary-input">Salary:</label>
-            <input type="number" id="salary-input" required> <br><br>
-
-            <label for="age-input">Age:</label>
-            <input type="number" id="age-input" required> <br><br>
-
-            <button id="add-user-btn" type="button">Add User</button>
-        </form> -->
-        <br><br>
-
         <div>
             <label for="userid-search-input">User ID:</label>
             <input placeholder="Enter User ID" id="userid-search-input">
@@ -72,12 +70,11 @@
             <label>Today:</label>
             <button id="search-btn-7" type="button">Search</button> &thinsp;
 
-            <label for="never-search-input">Never:</label>
-            <input placeholder="Enter condition" id="never-search-input">
+            <label>Never:</label>
             <button id="search-btn-8" type="button">Search</button> &thinsp; <br><br>
         </div>
 
-        <table id="table">
+        <table id="table" >
             <thead>
                 <tr>
                     <th>ID</th>
