@@ -11,7 +11,7 @@
     <div class="container" id="signup" style="display: none;">
         <div class="box form-box">
             <header>Sign Up</header>
-            <form action="" method="post">
+            <form action="register.php" method="post">
                 <div class="field input">
                     <label for="username-input">Username</label>
                     <input type="text" name="username" id="username-input" autocomplete="off" required>
@@ -37,7 +37,7 @@
                     <input type="number" name="age" id="age-input" autocomplete="off" required>
                 </div>
                 <div class="field">
-                    <button type="submit" class="btn" name="submit" id="add-user-btn">Sign Up</button>
+                    <button type="submit" class="btn" name="signUp" id="add-user-btn">Sign Up</button>
                 </div>
                 <div class="links">
                     Already have an Account? <a href="#" id="signInButton">Log In</a>
@@ -49,7 +49,7 @@
     <div class="container" id="signin">
         <div class="box form-box">
             <header>Login</header>
-            <form action="home.html" method="GET">
+            <form action="login.php" method="post"> <!-- Correct form action for login -->
                 <div class="field input">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" autocomplete="off" required>
@@ -59,7 +59,7 @@
                     <input type="password" name="password" id="password" autocomplete="off" required>
                 </div>
                 <div class="field">
-                    <input type="submit" class="btn" name="submit" value="Login">
+                    <input type="submit" class="btn" name="signin" value="Login">
                 </div>
                 <div class="links">
                     Need an Account? <a href="#" id="signUpButton">Sign Up</a>
