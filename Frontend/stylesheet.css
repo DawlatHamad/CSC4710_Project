@@ -84,6 +84,42 @@ body {
     margin-bottom: 15px;
 }
 
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #F9E6E9; /* Pink background */
+}
+
+.error {
+    color: #FF6F8A;
+    background-color: #fff;
+    padding: 10px 20px;
+    border: 2px solid #FF6F8A;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.backBtn {
+    height: 35px;
+    background: #FF6F8A;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 10px;
+    padding: 0px 10px;
+}
+
+.backBtn:hover {
+    opacity: 0.82;
+}
+
 /* Home Page */
 .nav {
     background: #fff;
@@ -155,6 +191,23 @@ body {
     gap: 15px; /* Space between the name and button */
 }
 
+.search-btn {
+    height: 35px;
+    background: #FF6F8A;
+    border: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 10px;
+    padding: 0px 10px;
+}
+
+.search-btn:hover {
+    opacity: 0.82;
+}
+
 @media only screen and (max-width:840px){
     .main-box .top{
         display: flex;
@@ -175,21 +228,28 @@ main {
     text-align: center;
 }
 
-table { 
+table {
     margin: 50px auto;
+    width: 90%; /* Adjust the width of the table */
+    border-collapse: collapse;
+    font-size: 14px; /* Set font size */
 }
 
 table, th, td {
-    border-collapse: collapse;
-    border: 1px solid #000; 
+    border: 3px double #000; /* Double border for table, header, and cells */
 }
 
 th, td {
-    padding: 5px;
+    padding: 12px; /* Increased padding for better spacing */
+    text-align: center; /* Left-align text in the cells */
+    
 }
 
 
-/* PLACE SOMEWHERE */
+tr:hover {
+    background-color: #e0e0e0; /* Highlight row on hover */
+}
+
 .salary-search {
     display: flex;
     align-items: center; /* Align items vertically in the center */
@@ -213,3 +273,6 @@ th, td {
     width: 80px;
     margin: 0 10px;
 }
+
+
+
