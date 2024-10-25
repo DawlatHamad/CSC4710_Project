@@ -27,7 +27,7 @@ Dawlat Hamad
        signintime DATETIME
    );   
 2. Folder setup is as follows:
-TEST
+TEST 
 |→ Backend 
     |→ .env 		Stores the database credentials 
     |→ app.js 		Backend server script: handles API request 
