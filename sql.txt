@@ -1,3 +1,5 @@
+LINK:  https://youtu.be/PM8LRNEXPiQ
+
 CREATE TABLE Users(
    userid int PRIMARY KEY AUTO_INCREMENT,
    username VARCHAR(50),
