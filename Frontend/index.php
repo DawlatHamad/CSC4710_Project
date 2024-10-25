@@ -49,7 +49,7 @@
     <div class="container" id="signin">
         <div class="box form-box">
             <header>Login</header>
-            <form action="login.php" method="post"> <!-- Correct form action for login -->
+            <form action="login.php" method="post">
                 <div class="field input">
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" autocomplete="off" required>
