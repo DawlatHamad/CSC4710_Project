@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt'); 
 let instance = null;
 dotenv.config();
 
@@ -31,9 +32,8 @@ class DbService {
                 connection.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
-                })
+                });
             });
-            // console.log(response);
             return response;
         } 
         catch (error) {
@@ -47,10 +47,10 @@ class DbService {
             const signin_time = new Date();
             const insertId = await new Promise((resolve, reject) => {
                 const query = `
-                    INSERT INTO users (username, password, firstname, lastname, salary, age, registerday, signintime) 
+                    INSERT INTO Users (username, password, firstname, lastname, salary, age, registerday, signintime) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                 `;
-    
+        
                 connection.query(query, [username, password, firstname, lastname, salary, age, register_day, signin_time], (err, results) => {
                     if (err) {
                         return reject(new Error(err.message));
@@ -59,15 +59,14 @@ class DbService {
                 });
             });
             return {
-                userid : insertId,
-                username : username,
-                password : password,
-                firstname : firstname,
-                lastname : lastname,
-                salary : salary,
-                age : age,
-                register_day : register_day,
-                signin_time : signin_time
+                userid: insertId,
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+                salary: salary,
+                age: age,
+                register_day: register_day,
+                signin_time: signin_time
             };  
         } 
         catch (error) {
@@ -201,7 +200,7 @@ class DbService {
     async searchByToday(today) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Users WHERE DATE(registerday) = ?;"; // Adjust your table and column names
+                const query = "SELECT * FROM Users WHERE DATE(registerday) = ?;";
     
                 connection.query(query, [today], (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -215,12 +214,12 @@ class DbService {
         }
     }
     
-    async searchByNever() {  // Remove the 'never' parameter since it's not being used
+    async searchByNever() {  
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Users WHERE signintime < NOW() - INTERVAL 10 DAY LIMIT 25;"; 
+                const query = "SELECT * FROM Users WHERE signintime < NOW() - INTERVAL 120 DAY LIMIT 25;"; 
         
-                connection.query(query, (err, results) => {  // Remove [never] as it's unused
+                connection.query(query, (err, results) => {  
                     if (err) reject(new Error(err.message));
                     resolve(results);
                 });
