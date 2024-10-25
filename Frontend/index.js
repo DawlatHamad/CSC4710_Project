@@ -12,3 +12,4 @@ signInButton.addEventListener('click', function() {
     signInForm.style.display = "flex";
     signUpForm.style.display = "none";
 });
+ 
