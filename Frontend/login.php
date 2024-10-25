@@ -1,29 +1,52 @@
 <?php 
 include 'connect.php';
 
-if(isset($_POST['signin'])){
+if (isset($_POST['signin'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    // $password = md5($password); // hash the password before matching
 
-    // Query to check for the username and password combination
-    $sql = "SELECT * FROM Users WHERE username='$username' AND password='$password'";
+    $sql = "SELECT * FROM Users WHERE username='$username'";
     $result = $conn->query($sql);
 
-    if($result->num_rows > 0){
-        // Execute the update statement to set the sign-in time
-        $updateSignInTime = "UPDATE Users SET signintime = NOW() WHERE username='$username'";
-        if ($conn->query($updateSignInTime) === TRUE) {
-            session_start();
-            $row = $result->fetch_assoc();
-            $_SESSION['username'] = $row['username'];  // Store the username in session
-            header("Location: home.php");  // Redirect to the home page
-            exit();
-        } else {
-            echo "Error updating sign-in time: " . $conn->error; // Display error if update fails
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        
+        if (password_verify($password, $row['password'])) {
+            $updateSignInTime = "UPDATE Users SET signintime = NOW() WHERE username='$username'";
+            if ($conn->query($updateSignInTime) === TRUE) {
+                session_start();
+                $_SESSION['username'] = $row['username'];  
+                header("Location: home.php");  
+                exit();
+            } 
+            else {
+                echo "Error updating sign-in time: ".$conn->error; 
+            }
+        } 
+        else {
+            showError();
         }
-    } else {
-        echo "Incorrect Username or Password";  // Error if no match found
+    } 
+    else {
+        showError();
     }
 }
+
+function showError() {
+    echo "<div class='errorContainer'>";
+    echo "<span class='error'>Incorrect Username or Password</span>";
+    echo "<button class='backBtn' onclick='history.back()'>Go Back</button>";
+    echo "</div>";
+}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>DASH</title>
+</head>
+</html>
