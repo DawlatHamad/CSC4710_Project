@@ -11,14 +11,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false}));
 
 // create
-app.post('/insert', (request, response) => {
+app.post('/insert', async (request, response) => {
     const { username, password, firstname, lastname, salary, age } = request.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.insertNewUsers(username, password, firstname, lastname, salary, age);
+    const hashedPassword = await bcrypt.hash(password, 10); 
+    const result = await db.insertNewUsers(username, hashedPassword, firstname, lastname, salary, age); 
 
     result
-    .then(data => response.json({data: data}))
+    .then(data => response.json({ data: data}))
     .catch(err => console.log(err));
 });
 
@@ -31,7 +32,7 @@ app.get('/getAll', (request, response) => {
     result
     .then(data => response.json({data : data}))
     .catch(err => console.log(err));
-})
+});
 
 // delete
 app.delete('/delete/:userid', (request, response) => {
@@ -95,7 +96,7 @@ app.get('/age', (request, response) => {
         .catch(err => console.log(err));
 });
 
-// search - after
+// search - After
 app.get('/after', (request, response) => {
     const { after } = request.query; 
     const db = dbService.getDbServiceInstance();
@@ -107,7 +108,7 @@ app.get('/after', (request, response) => {
         .catch(err => console.log(err));
 });
 
-// search - same
+// search - Same
 app.get('/same', (request, response) => {
     const { same } = request.query; 
     const db = dbService.getDbServiceInstance();
@@ -119,7 +120,7 @@ app.get('/same', (request, response) => {
         .catch(err => console.log(err));
 });
 
-// search - today
+// search - Today
 app.get('/today', (request, response) => {
     const { today } = request.query; 
     const db = dbService.getDbServiceInstance();
@@ -131,7 +132,7 @@ app.get('/today', (request, response) => {
         .catch(err => console.log(err));
 });
 
-// search - never
+// search - Never
 app.get('/never', (request, response) => {
     const { never } = request.query; 
     const db = dbService.getDbServiceInstance();
