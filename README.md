@@ -25,26 +25,31 @@ Dawlat Hamad
        age INT,
        registerday DATE,
        signintime DATETIME
-   );   
+   );
+   ```   
 2. Folder setup is as follows:
-TEST 
-|→ Backend 
-    |→ .env 		Stores the database credentials 
-    |→ app.js 		Backend server script: handles API request 
-    |→ dbService.js 	Database interactions and queries
-|→ Frontend 
-    |→ connect.php 	Connects PHP scripts to database
-    |→ home.js 		Functionality for home page
-    |→ home.php 	HTML for home page
-    |→ index.js 		Functionality for main page
-    |→ index.php 	HTML for main page
-    |→ login.php 	User login functionality 
-    |→ register.php 	Handles user registration
-    |→ stylesheet.css	Styling for HTML pages
+   ```sql
+   TEST
+   ├── Backend 
+   │   ├── .env             # Stores database credentials
+   │   ├── app.js           # Backend server script, handles API requests
+   │   └── dbService.js     # Database interactions and queries
+   └── Frontend 
+       ├── connect.php      # Connects PHP scripts to database
+       ├── home.js          # Functionality for home page
+       ├── home.php         # HTML for home page
+       ├── index.js         # Functionality for main page
+       ├── index.php        # HTML for main page
+       ├── login.php        # User login functionality
+       ├── register.php     # Handles user registration
+       └── stylesheet.css   # Styling for HTML pages
+   ```
 3. You can use the zip file to access the codes.
 4. Run the following commands in the terminal to connect the database to your code:
-    cd Backend
-    nodemon app
+   ```sql
+   cd Backend
+   nodemon app
+   ```
 5. Test the application by creating a user, logging in, and performing database searches.
 6. Log out once testing is complete.
 
