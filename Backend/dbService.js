@@ -217,7 +217,7 @@ class DbService {
     async searchByNever() {  
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Users WHERE signintime < NOW() - INTERVAL 120 DAY LIMIT 25;"; 
+                const query = "SELECT * FROM Users WHERE signintime < NOW() - INTERVAL 120 DAY;"; 
         
                 connection.query(query, (err, results) => {  
                     if (err) reject(new Error(err.message));
